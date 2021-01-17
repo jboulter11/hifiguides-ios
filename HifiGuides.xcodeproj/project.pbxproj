@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,15 @@
 		27A1CCF125B1697800F3D252 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27A1CCF025B1697800F3D252 /* Preview Assets.xcassets */; };
 		27A1CCFC25B1697900F3D252 /* HifiGuidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CCFB25B1697900F3D252 /* HifiGuidesTests.swift */; };
 		27A1CD0725B1697900F3D252 /* HifiGuidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD0625B1697900F3D252 /* HifiGuidesUITests.swift */; };
+		27A1CD1925B3E99300F3D252 /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD1825B3E99300F3D252 /* Sliders */; };
+		27A1CD1E25B3ECD600F3D252 /* SheetsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD1D25B3ECD600F3D252 /* SheetsDataProvider.swift */; };
+		27A1CD3525B3F23100F3D252 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD3425B3F23100F3D252 /* RxSwift */; };
+		27A1CD3725B3F23100F3D252 /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD3625B3F23100F3D252 /* RxTest */; };
+		27A1CD3925B3F23100F3D252 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD3825B3F23100F3D252 /* RxRelay */; };
+		27A1CD3B25B3F23100F3D252 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD3A25B3F23100F3D252 /* RxCocoa */; };
+		27A1CD3D25B3F23100F3D252 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD3C25B3F23100F3D252 /* RxBlocking */; };
+		27A1CD4325B3F58F00F3D252 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD4225B3F58F00F3D252 /* SwiftyJSON */; };
+		27A1CD4825B40F5F00F3D252 /* ContentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +54,8 @@
 		27A1CD0225B1697900F3D252 /* HifiGuidesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HifiGuidesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27A1CD0625B1697900F3D252 /* HifiGuidesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HifiGuidesUITests.swift; sourceTree = "<group>"; };
 		27A1CD0825B1697900F3D252 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27A1CD1D25B3ECD600F3D252 /* SheetsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsDataProvider.swift; sourceTree = "<group>"; };
+		27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +63,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A1CD3B25B3F23100F3D252 /* RxCocoa in Frameworks */,
+				27A1CD3925B3F23100F3D252 /* RxRelay in Frameworks */,
+				27A1CD4325B3F58F00F3D252 /* SwiftyJSON in Frameworks */,
+				27A1CD1925B3E99300F3D252 /* Sliders in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +74,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A1CD3725B3F23100F3D252 /* RxTest in Frameworks */,
+				27A1CD3D25B3F23100F3D252 /* RxBlocking in Frameworks */,
+				27A1CD3525B3F23100F3D252 /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +118,8 @@
 				27A1CCED25B1697800F3D252 /* Assets.xcassets */,
 				27A1CCF225B1697800F3D252 /* Info.plist */,
 				27A1CCEF25B1697800F3D252 /* Preview Content */,
+				27A1CD1D25B3ECD600F3D252 /* SheetsDataProvider.swift */,
+				27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */,
 			);
 			path = HifiGuides;
 			sourceTree = "<group>";
@@ -146,6 +166,12 @@
 			dependencies = (
 			);
 			name = HifiGuides;
+			packageProductDependencies = (
+				27A1CD1825B3E99300F3D252 /* Sliders */,
+				27A1CD3825B3F23100F3D252 /* RxRelay */,
+				27A1CD3A25B3F23100F3D252 /* RxCocoa */,
+				27A1CD4225B3F58F00F3D252 /* SwiftyJSON */,
+			);
 			productName = HifiGuides;
 			productReference = 27A1CCE625B1697700F3D252 /* HifiGuides.app */;
 			productType = "com.apple.product-type.application";
@@ -164,6 +190,11 @@
 				27A1CCF925B1697900F3D252 /* PBXTargetDependency */,
 			);
 			name = HifiGuidesTests;
+			packageProductDependencies = (
+				27A1CD3425B3F23100F3D252 /* RxSwift */,
+				27A1CD3625B3F23100F3D252 /* RxTest */,
+				27A1CD3C25B3F23100F3D252 /* RxBlocking */,
+			);
 			productName = HifiGuidesTests;
 			productReference = 27A1CCF725B1697900F3D252 /* HifiGuidesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -217,6 +248,11 @@
 				Base,
 			);
 			mainGroup = 27A1CCDD25B1697700F3D252;
+			packageReferences = (
+				27A1CD1725B3E99300F3D252 /* XCRemoteSwiftPackageReference "swiftui-sliders" */,
+				27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				27A1CD4125B3F58F00F3D252 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+			);
 			productRefGroup = 27A1CCE725B1697700F3D252 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -259,7 +295,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A1CD4825B40F5F00F3D252 /* ContentPresenter.swift in Sources */,
 				27A1CCEC25B1697700F3D252 /* ContentView.swift in Sources */,
+				27A1CD1E25B3ECD600F3D252 /* SheetsDataProvider.swift in Sources */,
 				27A1CCEA25B1697700F3D252 /* HifiGuidesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -580,6 +618,71 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		27A1CD1725B3E99300F3D252 /* XCRemoteSwiftPackageReference "swiftui-sliders" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/spacenation/swiftui-sliders";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		27A1CD4125B3F58F00F3D252 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		27A1CD1825B3E99300F3D252 /* Sliders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A1CD1725B3E99300F3D252 /* XCRemoteSwiftPackageReference "swiftui-sliders" */;
+			productName = Sliders;
+		};
+		27A1CD3425B3F23100F3D252 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		27A1CD3625B3F23100F3D252 /* RxTest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxTest;
+		};
+		27A1CD3825B3F23100F3D252 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		27A1CD3A25B3F23100F3D252 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		27A1CD3C25B3F23100F3D252 /* RxBlocking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxBlocking;
+		};
+		27A1CD4225B3F58F00F3D252 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A1CD4125B3F58F00F3D252 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 27A1CCDE25B1697700F3D252 /* Project object */;
 }
