@@ -22,6 +22,7 @@
 		27A1CD3D25B3F23100F3D252 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD3C25B3F23100F3D252 /* RxBlocking */; };
 		27A1CD4325B3F58F00F3D252 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD4225B3F58F00F3D252 /* SwiftyJSON */; };
 		27A1CD4825B40F5F00F3D252 /* ContentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */; };
+		27DA6B5E25BE27A8001BD865 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 27DA6B5D25BE27A8001BD865 /* SQLite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27DA6B5E25BE27A8001BD865 /* SQLite in Frameworks */,
 				27A1CD3B25B3F23100F3D252 /* RxCocoa in Frameworks */,
 				27A1CD3925B3F23100F3D252 /* RxRelay in Frameworks */,
 				27A1CD4325B3F58F00F3D252 /* SwiftyJSON in Frameworks */,
@@ -171,6 +173,7 @@
 				27A1CD3825B3F23100F3D252 /* RxRelay */,
 				27A1CD3A25B3F23100F3D252 /* RxCocoa */,
 				27A1CD4225B3F58F00F3D252 /* SwiftyJSON */,
+				27DA6B5D25BE27A8001BD865 /* SQLite */,
 			);
 			productName = HifiGuides;
 			productReference = 27A1CCE625B1697700F3D252 /* HifiGuides.app */;
@@ -252,6 +255,7 @@
 				27A1CD1725B3E99300F3D252 /* XCRemoteSwiftPackageReference "swiftui-sliders" */,
 				27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				27A1CD4125B3F58F00F3D252 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				27DA6B5C25BE27A8001BD865 /* XCRemoteSwiftPackageReference "SQLite" */,
 			);
 			productRefGroup = 27A1CCE725B1697700F3D252 /* Products */;
 			projectDirPath = "";
@@ -644,6 +648,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		27DA6B5C25BE27A8001BD865 /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.12.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -681,6 +693,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 27A1CD4125B3F58F00F3D252 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		27DA6B5D25BE27A8001BD865 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27DA6B5C25BE27A8001BD865 /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
