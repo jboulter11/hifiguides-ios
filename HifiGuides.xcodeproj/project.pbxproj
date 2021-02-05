@@ -22,7 +22,9 @@
 		27A1CD3D25B3F23100F3D252 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD3C25B3F23100F3D252 /* RxBlocking */; };
 		27A1CD4325B3F58F00F3D252 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD4225B3F58F00F3D252 /* SwiftyJSON */; };
 		27A1CD4825B40F5F00F3D252 /* ContentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */; };
+		27A2FBBD25CD01800018CCC7 /* SearchStateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A2FBBC25CD01800018CCC7 /* SearchStateRepository.swift */; };
 		27DA6B5E25BE27A8001BD865 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 27DA6B5D25BE27A8001BD865 /* SQLite */; };
+		27DA6B6325BE2993001BD865 /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DA6B6225BE2993001BD865 /* ProductRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		27A1CD0825B1697900F3D252 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27A1CD1D25B3ECD600F3D252 /* SheetsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsDataProvider.swift; sourceTree = "<group>"; };
 		27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPresenter.swift; sourceTree = "<group>"; };
+		27A2FBBC25CD01800018CCC7 /* SearchStateRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStateRepository.swift; sourceTree = "<group>"; };
+		27DA6B6225BE2993001BD865 /* ProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,8 @@
 				27A1CCEF25B1697800F3D252 /* Preview Content */,
 				27A1CD1D25B3ECD600F3D252 /* SheetsDataProvider.swift */,
 				27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */,
+				27A2FBBC25CD01800018CCC7 /* SearchStateRepository.swift */,
+				27DA6B6225BE2993001BD865 /* ProductRepository.swift */,
 			);
 			path = HifiGuides;
 			sourceTree = "<group>";
@@ -302,7 +308,9 @@
 				27A1CD4825B40F5F00F3D252 /* ContentPresenter.swift in Sources */,
 				27A1CCEC25B1697700F3D252 /* ContentView.swift in Sources */,
 				27A1CD1E25B3ECD600F3D252 /* SheetsDataProvider.swift in Sources */,
+				27A2FBBD25CD01800018CCC7 /* SearchStateRepository.swift in Sources */,
 				27A1CCEA25B1697700F3D252 /* HifiGuidesApp.swift in Sources */,
+				27DA6B6325BE2993001BD865 /* ProductRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

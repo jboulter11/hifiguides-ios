@@ -12,16 +12,16 @@ struct SheetData {
     var products: [Product]
 }
 
-struct Product: Identifiable, Equatable {
+struct Product: Identifiable, Equatable, Codable {
     var id: Int {
         name.hash
     }
     
     var name: String
     var price: Int
-    var link: String?
-    var reviewLink: String?
-    var imageLink: String?
+    var url: String?
+    var reviewUrl: String?
+    var imageUrl: String?
     var ampRequired: Bool
     var backType: String
     var frequencyResponseType: String
@@ -40,9 +40,7 @@ enum SheetsDataProviderError : Error {
 class SheetsDataProviderImpl : SheetsDataProvider {
     static let key = "AIzaSyDn0C2RHLogw09oF5zt10DMQZSSmGseUQg"
     
-    init() {
-        
-    }
+    init() { }
     
     func getData(with parameters: SearchParameters) -> Single<SheetData?> {
         return Single.create { observer -> Disposable in
@@ -68,7 +66,7 @@ class SheetsDataProviderImpl : SheetsDataProvider {
             }.resume()
             
             return Disposables.create()
-        }
+        }.subscribe(on: SerialDispatchQueueScheduler(qos: .userInteractive))
     }
     
     private class SheetDataParser {
@@ -117,9 +115,9 @@ class SheetsDataProviderImpl : SheetsDataProvider {
             return Product(
                 name: row[metadataMapping["name"]!].stringValue,
                 price: row[metadataMapping["price"]!].intValue,
-                link: row[metadataMapping["url"]!].string,
-                reviewLink: row[metadataMapping["review"]!].string,
-                imageLink: row[metadataMapping["img"]!].string,
+                url: row[metadataMapping["url"]!].string,
+                reviewUrl: row[metadataMapping["review"]!].string,
+                imageUrl: row[metadataMapping["img"]!].string,
                 ampRequired: row[metadataMapping["amp"]!].boolValue,
                 backType: row[metadataMapping["back_type"]!].stringValue,
                 frequencyResponseType: row[metadataMapping["category"]!].stringValue

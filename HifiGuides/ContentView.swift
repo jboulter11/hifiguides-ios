@@ -43,14 +43,12 @@ struct CuteHeader: View {
 }
 
 struct ContentView: View {
-    @State var productCategory:String?
-    @State var priceRange = 0.0...2000
-    @ObservedObject var contentPresenter: ContentPresenter
+    @ObservedObject var contentModel: ContentModel
         
     var productCategories = ["Headphones", "In-Ears", "Speakers", "Subwoofers", "Headphone sources"]
     
-    init(contentPresenter: ContentPresenter) {
-        self.contentPresenter = contentPresenter
+    init(contentModel: ContentModel) {
+        self.contentModel = contentModel
     }
     
     var body: some View {
@@ -61,42 +59,45 @@ struct ContentView: View {
                         CuteHeader(text: "Looking for:")
                         List {
                             ForEach(productCategories, id: \.self) { item in
-                                SelectionCell(string: item, selected: $productCategory)
+                                SelectionCell(string: item, selected: $contentModel.productCategory)
                                     .padding(4)
                             }
                         }
                     }.frame(maxWidth: .infinity)
                 }
-                Section {
-                    VStack {
-                        CuteHeader(text: "Price Range:")
-                        RangeSlider(range: $priceRange, in: 0...2000, step: 1.0)
-                        HStack {
-                            Text("$\(Int($priceRange.wrappedValue.lowerBound.rounded()))")
-                            Spacer()
-                            Text("$\(Int($priceRange.wrappedValue.upperBound.rounded()))")
-                        }
-                    }.frame(maxWidth: .infinity)
-                }
-                Section {
-                    List(contentPresenter.products) { product in
-                        VStack(alignment: .leading) {
+                if contentModel.productCategory != nil {
+                    Section {
+                        VStack {
+                            CuteHeader(text: "Price Range:")
+                            RangeSlider(range: $contentModel.priceRange, in: 0...2000, step: Int.Stride(1.0))
                             HStack {
-                                Text("\(product.name)")
+                                Text("$\(Int($contentModel.priceRange.wrappedValue.lowerBound))")
                                 Spacer()
-                                Text("$\(product.price)")
+                                Text("$\(Int($contentModel.priceRange.wrappedValue.upperBound))")
                             }
-                                
-                            if let imageString = product.imageLink,
-                               let imgURL = URL(string: imageString),
-                               let data = try? Data(contentsOf: imgURL),
-                               let image = UIImage(data: data) {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                        }.padding()
+                        }.frame(maxWidth: .infinity)
                     }
+                    Section {
+                        List(contentModel.products) { product in
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("\(product.name)")
+                                    Spacer()
+                                    Text("$\(product.price)")
+                                }
+                                    
+                                if let imageString = product.imageUrl,
+                                   let imgURL = URL(string: imageString),
+                                   let data = try? Data(contentsOf: imgURL),
+                                   let image = UIImage(data: data) {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                            }.padding()
+                        }
+                    }
+                    
                 }
             }.navigationTitle("Hifi Guides")
         }
@@ -105,6 +106,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(contentPresenter: ContentPresenter(sheetsDataProvider: SheetsDataProviderImpl()))
+        ContentView(contentModel: ContentModel())
     }
 }
