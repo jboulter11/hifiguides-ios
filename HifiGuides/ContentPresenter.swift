@@ -4,7 +4,7 @@ import Foundation
 
 class ContentModel : ObservableObject {
     // events
-    @Published var productCategory:String?
+    @Published var productCategory:ProductCategory?
     @Published var priceRange = 0...2000
     
     // state
@@ -31,14 +31,13 @@ class ContentPresenter {
         self.searchStateRepository.$searchModel.assign(to: \.model, on: self).store(in: &cancelBag)
         
         // TODO: move me and query more data
-        sheetsDataProvider.getData(with: SearchParameters(productCategory: "Headphones", priceRange: 0...2000))
-            .observe(on: SerialDispatchQueueScheduler(qos: .userInteractive))
-            .subscribe { [weak self] sheetData in
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self,
-                          let products = sheetData?.products else { return }
-                    
-                    self.productRepository.insert(products: products)
+        sheetsDataProvider.getHeadphones(with: HeadphoneSearchParameters(priceRange: 0...2000))
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] headphones in
+                guard let self = self else { return }
+                
+                DispatchQueue.global(qos: .background).async { [weak self] in
+                    self?.productRepository.insert(headphones: headphones)
                 }
             } onFailure: { error in
                 print(error)

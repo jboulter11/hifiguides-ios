@@ -2,33 +2,8 @@ import Foundation
 import RxSwift
 import SwiftyJSON
 
-struct SearchParameters {
-    var productCategory: String
-    var priceRange: ClosedRange<Int>
-    
-}
-
-struct SheetData {
-    var products: [Product]
-}
-
-struct Product: Identifiable, Equatable, Codable {
-    var id: Int {
-        name.hash
-    }
-    
-    var name: String
-    var price: Int
-    var url: String?
-    var reviewUrl: String?
-    var imageUrl: String?
-    var ampRequired: Bool
-    var backType: String
-    var frequencyResponseType: String
-}
-
 protocol SheetsDataProvider {
-    func getData(with parameters: SearchParameters) -> Single<SheetData?>
+    func getHeadphones(with parameters: HeadphoneSearchParameters) -> Single<[Headphone]>
 }
 
 enum SheetsDataProviderError : Error {
@@ -39,16 +14,35 @@ enum SheetsDataProviderError : Error {
 
 class SheetsDataProviderImpl : SheetsDataProvider {
     static let key = "AIzaSyDn0C2RHLogw09oF5zt10DMQZSSmGseUQg"
+    static let sheetUrl = "https://sheets.googleapis.com/v4/spreadsheets/1e6qXF1Ihw98aWZlGO9jVdLJr8tUvTztxQTsSutYLYpU/values/"
+    static let queryParams = "?valueRenderOption=FORMATTED_VALUE&key="
     
     init() { }
     
-    func getData(with parameters: SearchParameters) -> Single<SheetData?> {
-        return Single.create { observer -> Disposable in
-            let urlString = "https://sheets.googleapis.com/v4/spreadsheets/1e6qXF1Ihw98aWZlGO9jVdLJr8tUvTztxQTsSutYLYpU/values/"
-                + parameters.productCategory
-                + "?valueRenderOption=FORMATTED_VALUE&key=\(Self.key)"
+    func getHeadphones(with parameters: HeadphoneSearchParameters) -> Single<[Headphone]> {
+        return getData(with: getUrlString(for: .Headphones))
+            .map { data in
+                guard let headphones = SheetDataParser.parseHeadphones(from: data) else {
+                    throw SheetsDataProviderError.invalidResponse
+                }
+                return headphones
+            }.subscribe(on: SerialDispatchQueueScheduler(qos: .userInteractive))
+    }
+    
+    private func getUrlString(for category: ProductCategory) -> String {
+        let urlString =
+            Self.sheetUrl
+            + category.rawValue
+            + Self.queryParams
+            + Self.key
+        
+        return urlString
+    }
+    
+    func getData(with urlString: String) -> Single<Data> {
+        Single.create { observer -> Disposable in
             guard let url = URL(string: urlString) else {
-                observer(.failure(SheetsDataProviderError.invalidUrl))
+                observer(.failure(SheetsDataProviderError.invalidResponse))
                 return Disposables.create()
             }
             
@@ -57,16 +51,11 @@ class SheetsDataProviderImpl : SheetsDataProvider {
                     observer(.failure(SheetsDataProviderError.networkRequestReturnedError(error: error)))
                     return
                 }
-                
-                guard let sheetData = SheetDataParser.parse(data: data) else {
-                    observer(.failure(SheetsDataProviderError.invalidResponse))
-                    return
-                }
-                observer(.success(sheetData))
+                observer(.success(data))
             }.resume()
             
             return Disposables.create()
-        }.subscribe(on: SerialDispatchQueueScheduler(qos: .userInteractive))
+        }
     }
     
     private class SheetDataParser {
@@ -80,50 +69,83 @@ class SheetsDataProviderImpl : SheetsDataProvider {
             var reviewIndex: Int?
         }
         
-        static func parse(data: Data) -> SheetData? {
-            let json = JSON(data)
-            
-            let values = json["values"]
-            
-            var metadataMapping = [String:Int]()
-            for (index, label) in values[0].arrayValue.enumerated() {
-                metadataMapping[label.stringValue] = index
-            }
-            let arrayOfLabels = values[0].arrayValue
-            guard arrayOfLabels.contains("name"),
-                  arrayOfLabels.contains("url"),
-                  arrayOfLabels.contains("img"),
-                  arrayOfLabels.contains("price"),
-                  arrayOfLabels.contains("amp"),
-                  arrayOfLabels.contains("back_type"),
-                  arrayOfLabels.contains("category"),
-                  arrayOfLabels.contains("review") else {
+        static func parseHeadphones(from data: Data) -> [Headphone]? {
+            let json = JSON(data)["values"]
+            let mapping = metadataMapping(from: json)
+            guard validateLabels(from: json, requiredFields: Headphone.requiredFields()) else {
                 return nil
             }
-            
-            let valuesWithoutLabelsRow = values.dropFirst()
-            let products = valuesWithoutLabelsRow.compactMap { string, row in
-                return parse(row: row, metadataMapping: metadataMapping)
-            }
-            
-            return SheetData(products: products)
+            return parseHeadphones(rowsWithLabels: json, metadataMapping: mapping)
         }
         
-        private static func parse(row: JSON, metadataMapping: [String:Int]) -> Product? {
-            guard row.count == 8 else {
-                return nil
+        static func metadataMapping(from json: JSON) -> [String:Int] {
+            var metadataMapping = [String:Int]()
+            for (index, label) in json[0].arrayValue.enumerated() {
+                metadataMapping[label.stringValue] = index
             }
-            
-            return Product(
-                name: row[metadataMapping["name"]!].stringValue,
-                price: row[metadataMapping["price"]!].intValue,
-                url: row[metadataMapping["url"]!].string,
-                reviewUrl: row[metadataMapping["review"]!].string,
-                imageUrl: row[metadataMapping["img"]!].string,
-                ampRequired: row[metadataMapping["amp"]!].boolValue,
-                backType: row[metadataMapping["back_type"]!].stringValue,
-                frequencyResponseType: row[metadataMapping["category"]!].stringValue
-            )
+            return metadataMapping
         }
+        
+        static func validateLabels(from json: JSON, requiredFields: [String]) -> Bool {
+            let arrayOfLabels = json[0].arrayValue.map { $0.stringValue }
+            for field in requiredFields {
+                guard arrayOfLabels.contains(field) else {
+                    return false
+                }
+            }
+            return true
+        }
+        
+        private static func parseHeadphones(rowsWithLabels: JSON, metadataMapping: [String:Int]) -> [Headphone] {
+            let rowsWithoutLabels = rowsWithLabels.arrayValue.dropFirst()
+            return rowsWithoutLabels.compactMap { row in
+                guard row.count == 8 else {
+                    return nil
+                }
+                
+                return Headphone(
+                    name: row[metadataMapping["name"]!].stringValue,
+                    price: row[metadataMapping["price"]!].intValue,
+                    url: row[metadataMapping["url"]!].string,
+                    reviewUrl: row[metadataMapping["review"]!].string,
+                    imageUrl: row[metadataMapping["img"]!].string,
+                    ampRequired: row[metadataMapping["amp"]!].boolValue,
+                    backType: row[metadataMapping["back_type"]!].stringValue,
+                    frequencyResponseType: row[metadataMapping["category"]!].stringValue
+                )
+            }
+        }
+        
+        private static func parse(rowsWithLabels: JSON, metadataMapping: [String:Int]) -> [InEarMonitor] {
+            let rows = JSON(rowsWithLabels.dropFirst()).arrayValue
+            return rows.compactMap { row in
+                guard row.count == 5 else {
+                    return nil
+                }
+                
+                return InEarMonitor(
+                    name: row[metadataMapping["name"]!].stringValue,
+                    price: row[metadataMapping["price"]!].intValue,
+                    url: row[metadataMapping["url"]!].string,
+                    imageUrl: row[metadataMapping["img"]!].string,
+                    frequencyResponseType: row[metadataMapping["category"]!].stringValue
+                )
+            }
+        }
+    }
+}
+
+fileprivate extension Headphone {
+    static func requiredFields() -> [String] {
+        [
+            "name",
+            "url",
+            "img",
+            "price",
+            "amp",
+            "back_type",
+            "category",
+            "review",
+        ]
     }
 }

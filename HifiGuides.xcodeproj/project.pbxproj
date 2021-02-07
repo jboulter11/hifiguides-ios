@@ -23,6 +23,9 @@
 		27A1CD4325B3F58F00F3D252 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 27A1CD4225B3F58F00F3D252 /* SwiftyJSON */; };
 		27A1CD4825B40F5F00F3D252 /* ContentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */; };
 		27A2FBBD25CD01800018CCC7 /* SearchStateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A2FBBC25CD01800018CCC7 /* SearchStateRepository.swift */; };
+		27A2FBD125CFB4F90018CCC7 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A2FBD025CFB4F90018CCC7 /* Models.swift */; };
+		27A2FBD725D09B3F0018CCC7 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 27A2FBD625D09B3F0018CCC7 /* SDWebImage */; };
+		27A2FBDD25D09C550018CCC7 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 27A2FBDC25D09C550018CCC7 /* SDWebImageSwiftUI */; };
 		27DA6B5E25BE27A8001BD865 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 27DA6B5D25BE27A8001BD865 /* SQLite */; };
 		27DA6B6325BE2993001BD865 /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DA6B6225BE2993001BD865 /* ProductRepository.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +63,7 @@
 		27A1CD1D25B3ECD600F3D252 /* SheetsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsDataProvider.swift; sourceTree = "<group>"; };
 		27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPresenter.swift; sourceTree = "<group>"; };
 		27A2FBBC25CD01800018CCC7 /* SearchStateRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStateRepository.swift; sourceTree = "<group>"; };
+		27A2FBD025CFB4F90018CCC7 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		27DA6B6225BE2993001BD865 /* ProductRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A2FBDD25D09C550018CCC7 /* SDWebImageSwiftUI in Frameworks */,
+				27A2FBD725D09B3F0018CCC7 /* SDWebImage in Frameworks */,
 				27DA6B5E25BE27A8001BD865 /* SQLite in Frameworks */,
 				27A1CD3B25B3F23100F3D252 /* RxCocoa in Frameworks */,
 				27A1CD3925B3F23100F3D252 /* RxRelay in Frameworks */,
@@ -128,6 +134,7 @@
 				27A1CD4725B40F5F00F3D252 /* ContentPresenter.swift */,
 				27A2FBBC25CD01800018CCC7 /* SearchStateRepository.swift */,
 				27DA6B6225BE2993001BD865 /* ProductRepository.swift */,
+				27A2FBD025CFB4F90018CCC7 /* Models.swift */,
 			);
 			path = HifiGuides;
 			sourceTree = "<group>";
@@ -180,6 +187,8 @@
 				27A1CD3A25B3F23100F3D252 /* RxCocoa */,
 				27A1CD4225B3F58F00F3D252 /* SwiftyJSON */,
 				27DA6B5D25BE27A8001BD865 /* SQLite */,
+				27A2FBD625D09B3F0018CCC7 /* SDWebImage */,
+				27A2FBDC25D09C550018CCC7 /* SDWebImageSwiftUI */,
 			);
 			productName = HifiGuides;
 			productReference = 27A1CCE625B1697700F3D252 /* HifiGuides.app */;
@@ -262,6 +271,8 @@
 				27A1CD3325B3F23100F3D252 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				27A1CD4125B3F58F00F3D252 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				27DA6B5C25BE27A8001BD865 /* XCRemoteSwiftPackageReference "SQLite" */,
+				27A2FBD525D09B3F0018CCC7 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				27A2FBDB25D09C550018CCC7 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 27A1CCE725B1697700F3D252 /* Products */;
 			projectDirPath = "";
@@ -311,6 +322,7 @@
 				27A2FBBD25CD01800018CCC7 /* SearchStateRepository.swift in Sources */,
 				27A1CCEA25B1697700F3D252 /* HifiGuidesApp.swift in Sources */,
 				27DA6B6325BE2993001BD865 /* ProductRepository.swift in Sources */,
+				27A2FBD125CFB4F90018CCC7 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,6 +668,22 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		27A2FBD525D09B3F0018CCC7 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.4;
+			};
+		};
+		27A2FBDB25D09C550018CCC7 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
 		27DA6B5C25BE27A8001BD865 /* XCRemoteSwiftPackageReference "SQLite" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
@@ -701,6 +729,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 27A1CD4125B3F58F00F3D252 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		27A2FBD625D09B3F0018CCC7 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A2FBD525D09B3F0018CCC7 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		27A2FBDC25D09C550018CCC7 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27A2FBDB25D09C550018CCC7 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 		27DA6B5D25BE27A8001BD865 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;

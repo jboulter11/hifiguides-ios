@@ -1,5 +1,6 @@
 import SwiftUI
 import Sliders
+import SDWebImageSwiftUI
 
 protocol SelectableRow {
     var text: String { get }
@@ -7,22 +8,21 @@ protocol SelectableRow {
 }
 
 struct SelectionCell: View {
-
-    let string: String
-    @Binding var selected: String?
+    let category: ProductCategory
+    @Binding var selected: ProductCategory?
 
     var body: some View {
         HStack {
-            Text(string)
+            Text(category.rawValue)
             Spacer()
-            if string == selected {
+            if category == selected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.accentColor)
             }
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            self.selected = self.string
+            self.selected = self.category
         }
     }
 }
@@ -45,7 +45,7 @@ struct CuteHeader: View {
 struct ContentView: View {
     @ObservedObject var contentModel: ContentModel
         
-    var productCategories = ["Headphones", "In-Ears", "Speakers", "Subwoofers", "Headphone sources"]
+    var productCategories = ProductCategory.allCases
     
     init(contentModel: ContentModel) {
         self.contentModel = contentModel
@@ -59,7 +59,7 @@ struct ContentView: View {
                         CuteHeader(text: "Looking for:")
                         List {
                             ForEach(productCategories, id: \.self) { item in
-                                SelectionCell(string: item, selected: $contentModel.productCategory)
+                                SelectionCell(category: item, selected: $contentModel.productCategory)
                                     .padding(4)
                             }
                         }
@@ -85,15 +85,9 @@ struct ContentView: View {
                                     Spacer()
                                     Text("$\(product.price)")
                                 }
-                                    
-                                if let imageString = product.imageUrl,
-                                   let imgURL = URL(string: imageString),
-                                   let data = try? Data(contentsOf: imgURL),
-                                   let image = UIImage(data: data) {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                }
+                                WebImage(url: URL(string: product.imageUrl ?? ""))
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
                             }.padding()
                         }
                     }
