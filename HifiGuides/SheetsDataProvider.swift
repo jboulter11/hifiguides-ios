@@ -89,25 +89,27 @@ class SheetsDataProviderImpl : SheetsDataProvider {
             for (index, label) in values[0].arrayValue.enumerated() {
                 metadataMapping[label.stringValue] = index
             }
-            guard values[0].arrayValue.contains("name"),
-                  values[0].arrayValue.contains("url"),
-                  values[0].arrayValue.contains("img"),
-                  values[0].arrayValue.contains("price"),
-                  values[0].arrayValue.contains("amp"),
-                  values[0].arrayValue.contains("back_type"),
-                  values[0].arrayValue.contains("category"),
-                  values[0].arrayValue.contains("review") else {
+            let arrayOfLabels = values[0].arrayValue
+            guard arrayOfLabels.contains("name"),
+                  arrayOfLabels.contains("url"),
+                  arrayOfLabels.contains("img"),
+                  arrayOfLabels.contains("price"),
+                  arrayOfLabels.contains("amp"),
+                  arrayOfLabels.contains("back_type"),
+                  arrayOfLabels.contains("category"),
+                  arrayOfLabels.contains("review") else {
                 return nil
             }
             
-            let products = values.dropFirst().compactMap { string, row in
+            let valuesWithoutLabelsRow = values.dropFirst()
+            let products = valuesWithoutLabelsRow.compactMap { string, row in
                 return parse(row: row, metadataMapping: metadataMapping)
             }
             
             return SheetData(products: products)
         }
         
-        static func parse(row: JSON, metadataMapping: [String:Int]) -> Product? {
+        private static func parse(row: JSON, metadataMapping: [String:Int]) -> Product? {
             guard row.count == 8 else {
                 return nil
             }
