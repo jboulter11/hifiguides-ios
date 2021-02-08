@@ -78,6 +78,8 @@ struct ContentView: View {
                         }.frame(maxWidth: .infinity)
                     }
                     Section {
+                        Text("Results:")
+                            .font(.title2)
                         List(contentModel.products) { product in
                             VStack(alignment: .leading) {
                                 HStack {
