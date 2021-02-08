@@ -88,6 +88,7 @@ struct ContentView: View {
                                 WebImage(url: URL(string: product.imageUrl ?? ""))
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(8)
                             }.padding()
                         }
                     }

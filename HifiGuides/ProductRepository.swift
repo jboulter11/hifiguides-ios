@@ -344,7 +344,7 @@ class ProductRepository {
         createDatabase(tableHelper: headphoneSourcesTableHelper)
     }
     
-    func createDatabase<T: TableHelper>(tableHelper: T) {
+    private func createDatabase<T: TableHelper>(tableHelper: T) {
         guard let productDbPath = Self.productDatabasePath else { return }
         do {
             db = try Connection(.uri(productDbPath), readonly: false)
@@ -355,22 +355,42 @@ class ProductRepository {
         }
     }
     
-    func insert(headphones: [Headphone]) {
-        headphones.forEach { insert(headphone: $0) }
+    // MARK: Upsert
+    
+    func upsert(headphones: [Headphone]) {
+        headphones.forEach { upsert(object: $0, using: headphonesTableHelper) }
     }
     
-    func insert(headphone: Headphone) {
-        do {
-            guard let db = db else { return }
-            try db.transaction {
-                if try db.run(headphonesTableHelper.updateQuery(object: headphone)) == 0 {
-                    try db.run(headphonesTableHelper.insertQuery(object: headphone))
-                }
-            }
-        } catch {
-            print(error)
-        }
+    func upsert(inEarMonitors: [InEarMonitor]) {
+        inEarMonitors.forEach { upsert(object: $0, using: inEarMonitorsTableHelper) }
     }
+    
+    func upsert(speakers: [Speaker]) {
+        speakers.forEach { upsert(object: $0, using: speakersTableHelper) }
+    }
+    
+    func upsert(subwoofers: [Subwoofer]) {
+        subwoofers.forEach { upsert(object: $0, using: subwoofersTableHelper) }
+    }
+    
+    func upsert(headphoneSources: [HeadphoneSource]) {
+        headphoneSources.forEach { upsert(object: $0, using: headphoneSourcesTableHelper) }
+    }
+    
+    private func upsert<T: TableHelper>(object: T.ObjectType, using tableHelper: T) {
+            do {
+                guard let db = db else { return }
+                try db.transaction {
+                    if try db.run(tableHelper.updateQuery(object: object)) == 0 {
+                        try db.run(tableHelper.insertQuery(object: object))
+                    }
+                }
+            } catch {
+                print(error)
+            }
+    }
+    
+    // MARK: Get
     
     func getHeadphones(with searchParameters: HeadphoneSearchParameters) -> [Headphone] {
         self.getProducts(tableHelper: headphonesTableHelper, with: searchParameters)
@@ -406,13 +426,15 @@ class ProductRepository {
         return products
     }
     
-    func dataChangedPublisher() -> Deferred<AnyPublisher<Void, Never>> {
-        Deferred<AnyPublisher<Void, Never>> { [weak self] in
+    // Observing
+    
+    func dataChangedPublisher() -> AnyPublisher<Void, Never> {
+        Deferred { [weak self] () -> PassthroughSubject<Void, Never> in
             let subject = PassthroughSubject<Void, Never>()
             self?.db?.commitHook {
                 subject.send()
             }
-            return subject.eraseToAnyPublisher()
-        }
+            return subject
+        }.eraseToAnyPublisher()
     }
 }
